@@ -15,8 +15,9 @@ class Directory extends Component {
     static navigationOptions = {
         title: 'Directory'
     };
-    
+
     render() {
+        //each item listed
         const { navigate } = this.props.navigation;
         const renderDirectoryItem = ({item}) => {
             return (
