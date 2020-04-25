@@ -38,7 +38,7 @@ class Home extends Component {
     }
 
     render() {
-        //each featured is the ones we set to true to appear
+        //each featured is the ones we set to true to appear. ScrollView doesn't ned an array explicitly + separators.
         return (
             <ScrollView>
                 <RenderItem 

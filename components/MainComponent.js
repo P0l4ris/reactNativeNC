@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Home from './HomeComponent';
 import Directory from './DirectoryComponent';
 import CampsiteInfo from './CampsiteInfoComponent';
+import About from './AboutComponent';
+import Contact from './ContactComponent';
 import { View, Platform } from 'react-native';
 import { createStackNavigator, createDrawerNavigator } from 'react-navigation';
 
@@ -45,11 +47,53 @@ const HomeNavigator = createStackNavigator(
     }
 );
 
+
+const AboutNavigator = createStackNavigator(
+    {
+        About: { screen: About }
+    },
+
+    {
+        navigationOptions: {
+            headerStyle: {
+                backgroundColor: '#5637DD'
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                color: '#fff'
+            }
+        }
+    }
+);
+
+const ContactNavigator = createStackNavigator(
+    {
+        Contact: { screen: Contact }
+    },
+
+    {
+        navigationOptions: {
+            headerStyle: {
+                backgroundColor: '#5637DD'
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                color: '#fff'
+            }
+        }
+    }
+);
+
+
+
+
 //this one is different navigator. So far we have both stacks in here connected toa main hold all navigator
 const MainNavigator = createDrawerNavigator(
     {
         Home: { screen: HomeNavigator },
-        Directory: { screen: DirectoryNavigator}
+        Directory: { screen: DirectoryNavigator},
+        About: { screen: AboutNavigator },
+        Contact: { screen: ContactNavigator }
     },
     {             
         drawerBackgroundColor: '#CEC8FF'

@@ -36,9 +36,8 @@ class CampsiteInfo extends Component {
     }
 
     render() {
+        //navigate is a native component of navigation passed as props and it gets 'campsiteId from "navigate" function. Takes it as a second argument besides the screen name. 2 more advanced exist.
         const campsiteId = this.props.navigation.getParam('campsiteId');
-        //where does it get the param campsiteId? how does it work with navigation?
-        //does navigation just connect the item with ids?
         const campsite = this.state.campsites.filter(campsite => campsite.id === campsiteId)[0];
         return <RenderCampsite campsite={campsite} />;
      }
