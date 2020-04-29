@@ -25,8 +25,7 @@ const DirectoryNavigator = createStackNavigator(
                     onPress={() => navigation.toggleDrawer()}
                 />
             })
-        }
-,
+        },
 
         CampsiteInfo: { screen: CampsiteInfo }
     },
@@ -126,7 +125,7 @@ const ContactNavigator = createStackNavigator(
 //safe are for iphone X physical design and since it is a custom drawer
 //all this is for the side icons and Company Header on drawer apparently
 const CustomDrawerContentComponent = props => (
-    <ScrollView> 
+    <ScrollView>
         <SafeAreaView 
             style={styles.container}
             forceInset={{top: 'always', horizontal: 'never'}}>
@@ -164,7 +163,7 @@ const MainNavigator = createDrawerNavigator(
             }
         },
         Directory: { 
-            screen: HomeNavigator,
+            screen: DirectoryNavigator,
             navigationOptions: {
                 drawerIcon: ({tintColor}) => (
                     <Icon
@@ -177,7 +176,7 @@ const MainNavigator = createDrawerNavigator(
             }
         },
         About: {
-            screen: HomeNavigator,
+            screen: AboutNavigator,
             navigationOptions: {
                 drawerLabel: 'About Us',
                 drawerIcon: ({tintColor}) => (
@@ -191,7 +190,7 @@ const MainNavigator = createDrawerNavigator(
             }
         },
         Contact: {
-            screen: HomeNavigator,
+            screen: ContactNavigator,
             navigationOptions: {
                 drawerLabel: 'Contact Us',
                 drawerIcon: ({tintColor}) => (
@@ -209,7 +208,6 @@ const MainNavigator = createDrawerNavigator(
 
     {           
         drawerBackgroundColor: '#CEC8FF',
-        //here we pass all this prop items into the custom one to render at the end.
         contentComponent: CustomDrawerContentComponent
     }
 
