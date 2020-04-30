@@ -8,6 +8,17 @@ import { View, Platform, StyleSheet, Text, ScrollView, Image } from 'react-nativ
 import { createStackNavigator, createDrawerNavigator, DrawerItems } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import SafeAreaView from 'react-native-safe-area-view';
+import { connect } from 'react-redux';
+import { fetchCampsites, fetchComments, fetchPromotions, fetchPartners } from '../redux/ActionCreators';
+
+
+//instead of mapStateToProps we use mapToDispatch. these are all thunkEd with fetch. now usd as props here.
+const mapDispatchToProps = {
+    fetchCampsites,
+    fetchComments,
+    fetchPromotions,
+    fetchPartners
+};
 
 
 //createStack. has one required argument. What components available:
@@ -215,9 +226,15 @@ const MainNavigator = createDrawerNavigator(
 
 
 class Main extends Component {
-   
+   //call these action creators.
+    componentDidMount() {
+        this.props.fetchCampsites();
+        this.props.fetchComments();
+        this.props.fetchPromotions();
+        this.props.fetchPartners();
+    }
 
-    //onPress is passed to directory component with the campsites Id's. Ternary operator for Platform
+    //Ternary operator for Platform. Here it is IOS
     render() {
         return (
             <View style={{
@@ -263,4 +280,5 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Main;
+//no mapStateToProps so it's null.
+export default connect(null, mapDispatchToProps)(Main);
