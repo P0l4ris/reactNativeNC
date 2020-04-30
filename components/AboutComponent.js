@@ -3,10 +3,11 @@ import { Text, ScrollView, FlatList } from 'react-native';
 import { Card, ListItem } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
-
+//no curly braces because it is default export component
+import Loading from './LoadingComponent';
 
 const mapStateToProps = state => {
-    return{
+    return {
         //only need partners from the props
         partners: state.partners
     };
@@ -31,6 +32,29 @@ static navigationOptions = {
                 />
             );
         };
+
+        //these next ifs checks the partners data .isLoading and uses the Loading component we made in the same folder, or gives an error text.
+        if(this.props.partners.isLoading) {
+            return(
+                <ScrollView>
+                <Mission />
+                <Card title="Community Partners">
+                   <Loading />
+                </Card>
+            </ScrollView>
+            )
+        }
+
+        if (this.props.partners.errMess) {
+            return(
+                <ScrollView>
+            <Mission />
+            <Card title="Community Partners">
+                <Text>{this.props.partners.errMess}</Text>
+            </Card>
+        </ScrollView>
+            )
+        }
         return(
         <ScrollView>
             <Mission />
