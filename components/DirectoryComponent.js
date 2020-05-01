@@ -49,7 +49,7 @@ class Directory extends Component {
                 <View>
                     <Text>{props.campsites.errMess}</Text>
                 </View>
-            );
+            );aa
         }
 
         return (
