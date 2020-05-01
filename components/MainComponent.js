@@ -4,6 +4,7 @@ import Directory from './DirectoryComponent';
 import CampsiteInfo from './CampsiteInfoComponent';
 import About from './AboutComponent';
 import Contact from './ContactComponent';
+import Reservation from './ReservationComponent';
 import { View, Platform, StyleSheet, Text, ScrollView, Image } from 'react-native';
 import { createStackNavigator, createDrawerNavigator, DrawerItems } from 'react-navigation';
 import { Icon } from 'react-native-elements';
@@ -38,6 +39,7 @@ const DirectoryNavigator = createStackNavigator(
             })
         },
 
+        //this is nested in Directory navigator
         CampsiteInfo: { screen: CampsiteInfo }
     },
     {
@@ -129,12 +131,38 @@ const ContactNavigator = createStackNavigator(
     }
 );
 
+const ReservationNavigator = createStackNavigator(
+    {
+        Reservation: { screen: Reservation }
+    },
+
+    {
+        navigationOptions: ({navigation}) =>  ({
+            headerStyle: {
+                backgroundColor: '#5637DD'
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                color: '#fff'
+            },
+            headerLeft: <Icon
+                name='tree'
+                type='font-awesome'
+                iconStyle={styles.stackIcon}
+                onPress={() => navigation.toggleDrawer()}
+        />
+        })
+    }
+);
+
+
 
 
 
 
 //safe are for iphone X physical design and since it is a custom drawer
 //all this is for the side icons and Company Header on drawer apparently
+//this is using the styles sheet component we made below.
 const CustomDrawerContentComponent = props => (
     <ScrollView>
         <SafeAreaView 
@@ -186,6 +214,23 @@ const MainNavigator = createDrawerNavigator(
                 )
             }
         },
+
+        Reservation: {
+            screen: ReservationNavigator,
+            navigationOptions: {
+                drawerLabel: 'Reserve Campsite',
+                drawerIcon: ({tintColor}) => (
+                    <Icon
+                        name='tree'
+                        type='font-awesome'
+                        size={24}
+                        color={tintColor}
+                    />
+                )
+            }
+        },
+
+
         About: {
             screen: AboutNavigator,
             navigationOptions: {
