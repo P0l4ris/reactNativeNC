@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
 //no curly braces because it is default export component
 import Loading from './LoadingComponent';
+import * as Animatable from 'react-native-animatable';
+
 
 const mapStateToProps = state => {
     return {
@@ -44,28 +46,32 @@ static navigationOptions = {
             </ScrollView>
             )
         }
-
+        //Animated here uses View, Text, image like Animate
         if (this.props.partners.errMess) {
             return(
-                <ScrollView>
-            <Mission />
-            <Card title="Community Partners">
-                <Text>{this.props.partners.errMess}</Text>
-            </Card>
-        </ScrollView>
+            <ScrollView>
+                <Animatable.View animation='fadeInDown' duration={2000} delay={1000}>
+                    <Mission />
+                    <Card title="Community Partners">
+                        <Text>{this.props.partners.errMess}</Text>
+                    </Card>
+                </Animatable.View>
+            </ScrollView>
             )
         }
         return(
         <ScrollView>
-            <Mission />
-            <Card title="Community Partners">
-                <FlatList
-                //partners.partners because the first one holds all the state for partners..loading etc. the second actually refers o the data array only
-                data={this.props.partners.partners}
-                renderItem={renderPartner}
-                keyExtractor={item => item.id.toString()}
-            />
-            </Card>
+            <Animatable.View animation='fadeInDown' duration={2000} delay={1000}>
+                <Mission />
+                <Card title="Community Partners">
+                    <FlatList
+                    //partners.partners because the first one holds all the state for partners..loading etc. the second actually refers o the data array only
+                    data={this.props.partners.partners}
+                    renderItem={renderPartner}
+                    keyExtractor={item => item.id.toString()}
+                />
+                </Card>
+            </Animatable.View>
         </ScrollView>
         )
     }
