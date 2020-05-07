@@ -12,6 +12,9 @@ export const favorites = (state = [], action) => {
             }
             //if doesn't exist, then: add it to the array list
             return state.concat(action.payload);
+        
+        case ActionTypes.DELETE_FAVORITE:
+            return state.filter(favorite => favorite !== action.payload);
         default:
             return state;
     }
