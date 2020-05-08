@@ -24,15 +24,25 @@ const mapDispatchToProps = {
 
 //destructuring campsite so we can use array object as variables {{id, name}}
 function RenderCampsite(props) {
-    
-
     //instead of passing campsite to RenderCampsite, we pass all props and specify specific props here on const {campsite} = props;
      const{campsite} = props;
+
+    //we use a react 'ref' to have a animatable animation?
+    //refs here are similar to 'ref' in HTML for javaScript
+    const view = React.createRef();
+
+
     //dx is a property distance across x axis
      const recognizeDrag = ({dx}) => (dx < -200) ? true : false;
     //pan responder monitors gestures and here we specified what direction to track to activate our function panResponder
      const panResponder = PanResponder.create({
          onStartShouldSetPanResponder: () => true,
+         //when a gesture is first recognize it's grant for handler
+         onPanResponderGrant: ()=> {
+             //animatable current animation passed as method
+            view.current.rubberBand(1000)
+            .then(endState => console.log(endState.finished ? 'finished' : 'cancelled'));
+         },
          onPanResponderEnd:(e, gestureState) => {
              console.log('pan responder end', gestureState);
              if (recognizeDrag(gestureState)) {
@@ -63,6 +73,9 @@ function RenderCampsite(props) {
                 animation='fadeInDown' 
                 duration={2000} 
                 delay={1000}
+                ref={view} //from a top ref we made into a component
+
+                // we spread the object of panResponder and use handlers 
                 {...panResponder.panHandlers}>
                     <Card
                         featuredTitle={campsite.name}
