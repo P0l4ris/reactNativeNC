@@ -6,10 +6,21 @@ import { comments } from './comments';
 import { promotions } from './promotions';
 import { partners } from './partners';
 import { favorites } from './favorites';
+import { persistStore, persistCombineReducers } from 'redux-persist';
+//storage access from the device
+import storage from 'redux-persist/es/storage';
+
+//2 required values. local storage is default- diff ones
+const config = {
+    key: 'root',
+    storage,
+    debug: true
+}
 
 export const ConfigureStore = () => {
     const store = createStore(
-        combineReducers({
+        //updates state to local storage. rid of combineReducers
+        persistCombineReducers(config, {
             campsites,
             comments,
             partners,
@@ -19,5 +30,8 @@ export const ConfigureStore = () => {
         applyMiddleware(thunk, logger)
     );
 
-    return store;
+    const persistor = persistStore(store);
+    //we use persistor in App.js
+
+    return { persistor, store };
 }
