@@ -43,14 +43,14 @@ function RenderItem(props) {
 }
 
 class Home extends Component {
-
+//#1
     constructor(props) {
         super(props);
         this.state = {
             scaleValue: new Animated.Value(0)
         };
     }
-
+//#2
     animate() {
         Animated.timing(
             this.state.scaleValue,
@@ -62,7 +62,7 @@ class Home extends Component {
     }
     //.start can also have a stop. Did mount is for page opening
     //we went with starting with a default Animated.Value and changing it with to value. We chose scaleValue arbitrarily
-
+//#4 optional
     componentDidMount() {
         this.animate();
     }
@@ -75,7 +75,7 @@ class Home extends Component {
     render() {
         //each featured is the ones we set to true to appear. ScrollView doesn't ned an array explicitly + separators.
         return (
-            //set a dynamic value with transform style. You can change color or rotation with this.
+            //set a dynamic value with transform style. You can change color or rotation with this.//#3
             <Animated.ScrollView style={{transform: [{scale: this.state.scaleValue}]}}>
                 <RenderItem
                     item={this.props.campsites.campsites.filter(campsite => campsite.featured)[0]}

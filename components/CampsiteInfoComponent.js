@@ -31,6 +31,7 @@ function RenderCampsite(props) {
     //refs here are similar to 'ref' in HTML for javaScript
     const view = React.createRef();
 
+    const recognizeComment = ({dx}) => (dx > 200) ? true : false;
 
     //dx is a property distance across x axis
      const recognizeDrag = ({dx}) => (dx < -200) ? true : false;
@@ -63,6 +64,10 @@ function RenderCampsite(props) {
                      {cancelable: false}
                  );
              }
+
+            else if (recognizeComment(gestureState)) {
+                props.onShowModal();
+            }
              return true;
          }
      })
@@ -239,7 +244,7 @@ class CampsiteInfo extends Component {
                         <View>
                             <Button 
                                 title= 'Submit'
-                                color= '5637DD'
+                                color= '#5637DD'
                                 onPress={() => {
                                     this.handleComment(campsiteId);
                                     this.resetForm();
