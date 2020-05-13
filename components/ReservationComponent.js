@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, StyleSheet, Picker, Switch, Button, Modal, Alert } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import * as Animatable from 'react-native-animatable';
+import * as Permissions from 'expo-permissions';
+import { Notifications } from 'expo';
 
 class Reservation extends Component {
     constructor(props) {
@@ -54,14 +56,42 @@ class Reservation extends Component {
                 },
                 { 
                     text: "OK",
-                    onPress: () => this.resetForm()
+                    onPress: () => {
+                        this.presentLocalNotification(this.state.date);
+                        this.resetForm();
+                    }
                 }
             ],
             { cancelable: false }
         );
 
+    //asynchronous function with async. not passing anything empty parameter
+    async obtainNotificationPermission() {
+        //await instead of a .then ONLY used with a async function 
+        //we have two methods. get, and if not allowed, ASK.
+        const permission = await Permissions.getAsync(Permissions.USER_FACING_NOTIFICATIONS)
+        //not granted, ASK async
+        if(permission.status !== 'granted') {
+            const permission = await Permissions.askAsync(Permissions.USER_FACING_NOTIFICATIONS)
+            //await and if nothing from asking promise, then you give an alert
+            if(permission.status !== 'granted') {
+                Alert.alert('Permission not granted to show notifications');
+            }
+            return permission;
+        }
+        return permission;
+    }
+    //the permission returns are if the awaits are fulfilled
 
-
+    async presentLocalNotification(date) {
+        const permission = await this.obtainNotificationPermission();
+        if(permission.status === 'granted') {
+            Notifications.presentLocalNotificationAsync({
+                title: 'Your Campsite Reservation Search',
+                body: 'Search for' + date + 'requested'
+            });
+        }
+    }
 //instead of Options like react, we use Picker with selected value and onValueChange props. iteValue updates a specific component's state "campers". value gets passed to onValueChange. selected value shows the user what they selected
     render() {
         return(
