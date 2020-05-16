@@ -82,7 +82,7 @@ class Reservation extends Component {
         return permission;
     }
     //the permission returns are if the awaits are fulfilled
-
+    //manipulator seems to use object wrapped in promise
     async presentLocalNotification(date) {
         const permission = await this.obtainNotificationPermission();
         if(permission.status === 'granted') {

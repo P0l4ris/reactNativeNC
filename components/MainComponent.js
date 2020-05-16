@@ -351,26 +351,40 @@ class Main extends Component {
         this.props.fetchComments();
         this.props.fetchPromotions();
         this.props.fetchPartners();
+        this.showNetInfo();
 
         //once we used connectionInfo for resolved promise or "state"
         //toast works for android simplified. IOS is alert only
-        NetInfo.fetch().then(connectionInfo => {
-            (Platform.OS === 'ios') ? Alert.alert('Initial Network Connectivity Type:', connectionInfo.Type) : ToastAndroid.show('Initial Network Type:' + connectionInfo.type, ToastAndroid.LONG);
-        });
+       
+       //changed from .then to await below
+        // NetInfo.fetch().then(connectionInfo => {
+        //     (Platform.OS === 'ios') ? Alert.alert('Initial Network Connectivity Type:', connectionInfo.Type) : ToastAndroid.show('Initial Network Type:' + connectionInfo.type, ToastAndroid.LONG);
+        // });
 
 
         //subscribe to network changes. first unsubscribe listener on its return
         this.unsubscribeNetInfo = NetInfo.addEventListener(connectionInfo => {
-            this.handleConnectivityChange(connectionInfo);
+        this.handleConnectivityChange(connectionInfo);
         })
     }
 
+    showNetInfo = async () => {
+        const connectionInfo = await NetInfo.fetch();
+        (Platform.OS === 'ios') ? Alert.alert('Initial Network Connectivity Type:', connectionInfo.Type) : ToastAndroid.show('Initial Network Type:' + connectionInfo.type, ToastAndroid.LONG);
+        
+    }
+
+
+
+
     //part of NetInfo handler
+
+
     componentWillUnmount() {
         this.unsubscribeNetInfo();
     }
 
-    //NetInfo Change for event handler
+    // //NetInfo Change for event handler
     handleConnectivityChange = connectionInfo => {
         //any network unmentioned
         let connectionMsg = 'You are now connected to an active network.';
@@ -393,6 +407,8 @@ class Main extends Component {
     }
 
     //Ternary operator for Platform. Here it is IOS
+
+    
     render() {
         return (
             <View style={{
