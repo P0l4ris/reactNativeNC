@@ -4,6 +4,7 @@ import { Input, CheckBox, Button, Icon } from 'react-native-elements';
 import * as SecureStore from 'expo-secure-store';
 import * as ImagePicker from 'expo-image-picker';
 import * as ImageManipulator from 'expo-image-manipulator';
+import * as MediaLibrary from 'expo-media-library';
 import * as Permissions from 'expo-permissions';
 import { createBottomTabNavigator } from 'react-navigation';
 import { baseUrl } from '../shared/baseUrl';
@@ -160,24 +161,25 @@ import { baseUrl } from '../shared/baseUrl';
             if (!capturedImage.cancelled) {
                 console.log(capturedImage);
                 this.processImage(capturedImage.uri);
-                // this.saveToLibrary(capturedImage.uri);
+                this.saveToLibrary(capturedImage.uri);
             }
         }
     }
     //no returns on these ifs?
 
-    // saveToLibrary = async (imgUri) => {
-    //     const saveToGallery = await MediaLibrary.saveToLibraryAsync(
-    //         imgUri,
-    //     );
-    //     console.log(saveToGallery);
-    //     this.setState({imageUrl: saveToGallery.uri})
-    // }
+    saveToLibrary = async (imgUri) => {
+        const saveToGallery = await MediaLibrary.saveToLibraryAsync(
+            imgUri,
+        );
+        console.log(saveToGallery);
+        this.setState({imageUrl: saveToGallery.uri})
+    }
 
     processImage = async (imgUri) => {
         const processedImage = await ImageManipulator.manipulateAsync(
             imgUri, [{resize: {width: 400}}],
-            { compress: 1, format: ImageManipulator.SaveFormat.PNG}
+            { compress: 1, format: ImageManipulat
+                or.SaveFormat.PNG}
         );
         console.log(processedImage);
         this.setState({imageUrl: processedImage.uri});
